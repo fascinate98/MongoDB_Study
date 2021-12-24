@@ -1,0 +1,25 @@
+> db.avengers.drop()
+true
+>
+>
+>
+> db.avengers.insert({"name":"진혜린", "age" : 24, "food" : ["오렌지주스"], "color":["회색"], "book":[{"bookName":"어마무시한 책 제목", "publisher":"어마무시한 사람들", "genre":"예술"}]})
+WriteResult({ "nInserted" : 1 })
+> db.avengers.insert({"name":"김준호", "age" : 24, "food" : ["양꼬치"], "color":[], "book":[{"bookName":"죽음에 관하 여", "publisher":"영컴", "genre":"만화"}]})
+WriteResult({ "nInserted" : 1 })
+> db.avengers.insert({"name":"김선혁", "age" : 26, "food" : ["회"], "color":["green"], "book":[{"bookName":"자바의 정석", "publisher":"도우출판", "genre":"교육"}]})
+WriteResult({ "nInserted" : 1 })
+> db.avengers.insert({"name":"백성문", "age" : 27, "food" : ["치킨", "소주"], "color":["검정"], "book":[{"bookName":"마션", "publisher":"알에이치코리아", "genre":"소설"}]})
+WriteResult({ "nInserted" : 1 })
+> db.avengers.insert({"name":"정의진", "age" : 28, "food" : ["햄버거"], "color":["보라"], "book":[{"bookName":"어린왕자", "publisher":"달리", "genre":"판타지"}]})
+WriteResult({ "nInserted" : 1 })
+> db.avengers.insert({"name":"하진수", "age" : 29, "food" : ["치킨"], "color":["블랙"], "book":[{"bookName":"위저드  베이커리", "publisher":"창비", "genre":"판타지"}]})
+WriteResult({ "nInserted" : 1 })
+>
+> db.avengers.find()
+{ "_id" : ObjectId("61c2e1edb3fb741bf9c04765"), "name" : "진혜린", "age" : 24, "food" : [ "오렌지주스" ], "color" : [ "회색" ], "book" : [ { "bookName" : "어마무시한 책 제목", "publisher" : "어마무시한 사람들", "genre" : "예술" } ] }
+{ "_id" : ObjectId("61c2e1f4b3fb741bf9c04766"), "name" : "김준호", "age" : 24, "food" : [ "양꼬치" ], "color" : [ ], "book" : [ { "bookName" : "죽음에 관하여", "publisher" : "영컴", "genre" : "만화" } ] }
+{ "_id" : ObjectId("61c2e1fbb3fb741bf9c04767"), "name" : "김선혁", "age" : 26, "food" : [ "회" ], "color" : [ "green" ], "book" : [ { "bookName" : "자바의 정석", "publisher" : "도우출판", "genre" : "교육" } ] }
+{ "_id" : ObjectId("61c2e201b3fb741bf9c04768"), "name" : "백성문", "age" : 27, "food" : [ "치킨", "소주" ], "color" : [ "검정" ], "book" : [ { "bookName" : "마션", "publisher" : "알에이치코리아", "genre" : "소설" } ] }
+{ "_id" : ObjectId("61c2e207b3fb741bf9c04769"), "name" : "정의진", "age" : 28, "food" : [ "햄버거" ], "color" : [ "보라" ], "book" : [ { "bookName" : "어린왕자", "publisher" : "달리", "genre" : "판타지" } ] }
+{ "_id" : ObjectId("61c2e20eb3fb741bf9c0476a"), "name" : "하진수", "age" : 29, "food" : [ "치킨" ], "color" : [ "블랙" ], "book" : [ { "bookName" : "위저드 베이커리", "publisher" : "창비", "genre" : "판타지" } ] }

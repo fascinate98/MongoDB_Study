@@ -1,0 +1,7 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "c:\\Users\\BIT\\Downloads\\몽고디비\\mongo-java-driver-3.12.10.jar",
+        "c:\\Users\\BIT\\Downloads\\mongo2 (1)\\mongo-java-driver-3.12.10.jar"
+    ]
+}

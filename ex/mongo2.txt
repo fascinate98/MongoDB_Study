@@ -1,0 +1,116 @@
+제출파일명 : mongo2.txt
+메일제목 : mongoDB 실습 2 - XXX
+
+- 22일에 생성한 컬렉션을 사용하는 문제입니다.
+   (컬렉션에 저장된 도큐먼트가 제가 알려드린 구조여야 합니다.)
+- 작성된 코드를 mongo2.txt 에 저장하여 제출하세요.
+
+1. 모든 팀원들의 이름을 출력한다.
+> db.avengers.find({},{name:true , _id : false})
+{ "name" : "진혜린" }
+{ "name" : "김준호" }
+{ "name" : "김선혁" }
+{ "name" : "백성문" }
+{ "name" : "정의진" }
+{ "name" : "하진수" }
+
+
+2. 모든 팀원들의 이름과 나이를 나이가 적은 순으로 출력한다.
+> db.avengers.find({ },{name:true ,age:-1,  _id : false})
+{ "name" : "진혜린", "age" : 24 }
+{ "name" : "김준호", "age" : 24 }
+{ "name" : "김선혁", "age" : 26 }
+{ "name" : "백성문", "age" : 27 }
+{ "name" : "정의진", "age" : 28 }
+{ "name" : "하진수", "age" : 29 }
+
+3. 나이가 제일 어린 팀원의 이름과 나이를 출력한다.
+> db.avengers.find({},{name:true, age:true, _id:false}).sort({age:1 , name : 1}).limit(1)
+{ "name" : "김준호", "age" : 24 }
+
+
+4. 모든 팀원들에 대해서 이름과 좋아하는 음식을 출력한다.
+> db.avengers.find({ },{name:true , food:true,  _id : false})
+{ "name" : "진혜린", "food" : [ "오렌지주스" ] }
+{ "name" : "김준호", "food" : [ "양꼬치" ] }
+{ "name" : "김선혁", "food" : [ "회" ] }
+{ "name" : "백성문", "food" : [ "치킨", "소주" ] }
+{ "name" : "정의진", "food" : [ "햄버거" ] }
+{ "name" : "하진수", "food" : [ "치킨" ] }
+
+
+5. 내 이름에 해당하는 팀원에 좋아하는 책을 추가 하는데 책의 정보는 ㅂ
+     제목 : 처음 시작하는 스프링 프레임워크
+     출판사 : 부크크
+     장르 : IT
+> db.avengers.update({name : "진혜린"} , { $push : {book :  {bookName : "처음 시작하는 스프링 프레임워크" , publisher : "부크크" , genre : "IT"}}})
+
+
+6. 팀원들이 좋아하는 책의 제목을 출력한다.
+    팀원마다 각각 출력한다.
+
+> db.avengers.find({},{"_id":false,"book.bookName":true , name : true})
+{ "name" : "진혜린", "book" : [ { "bookName" : "어마무시한 책 제목" }, [ { "bookName" : "처음부터 시작하는 스프링 프레임워크" } ] ] }
+{ "name" : "김준호", "book" : [ { "bookName" : "죽음에 관하여" } ] }
+{ "name" : "김선혁", "book" : [ { "bookName" : "자바의 정석" } ] }
+{ "name" : "백성문", "book" : [ { "bookName" : "마션" } ] }
+{ "name" : "정의진", "book" : [ { "bookName" : "어린왕자" } ] }
+{ "name" : "하진수", "book" : [ { "bookName" : "위저드 베이커리" } ] }
+
+
+7. 내 이름에 해당하는aa 팀원의 모든 정보를 출력한다.
+> db.avengers.find({name:"진혜린"},{_id:false})
+{ "name" : "진혜린", "age" : 24, "food" : [ "오렌지주스" ], "color" : [ "회색" ], "book" : [ { "bookName" : "어마무시한 책 제목", "publisher" : "어마무시한 사람들", "genre" : "예술" }, [ { "bookName" : "처음부터 시작하는 스프링 프레임워크", "publisher" : "부크크", "genre" : "IT" } ] ] }
+>
+
+
+8. 내 이름에 해당하는 팀원이 좋아하는 칼라를 출력한다.    
+> db.avengers.find({name:"진혜린"},{_id:false, color:true})
+{ "color" : [ "회색" ] }
+
+
+9. 나이가 25세 이상인 팀원들의 이름과 나이를 출력한다.
+> db.avengers.find({age: {$gte : 25}},{_id:false, name:true, age:true})
+{ "name" : "김선혁", "age" : 26 }
+{ "name" : "백성문", "age" : 27 }
+{ "name" : "정의진", "age" : 28 }
+{ "name" : "하진수", "age" : 29 }
+
+
+10. '고기'를 좋아하는 팀원들의 정보를 출력한다. 없으면 '고기를 좋아하는 팀원은 없습니다.'를 출력한다.
+     (리턴값을 변수에 담아서 if 문과 while 문 사용)
+
+> var myCursor = db.avengers.find({food:"고기"},{_id:false})
+> if(myCursor.hasNext()){
+... ... while(myCursor.hasNext()){
+... ... doc=myCursor.next();
+... ... printjson(doc);
+... ... }
+... ... }else{print("고기를 좋아하는 사람이 없다.")}
+고기를 좋아하는 사람이 없다.
+
+
+
+11. 좋아하는 책이 2권인 팀원들의 이름과 책 제목을 출력한다.
+    (ㅠ 도큐먼트 참조)
+
+> db.avengers.find({"book":{$size : 2}},{name : true , "book.bookName" : true})
+{ "_id" : ObjectId("61c2e1edb3fb741bf9c04765"), "name" : "진혜린", "book" : [ { "bookName" : "어마무시한 책 제목" }, [ { "bookName" : "처음부터 시작하는 스프링 프레임워크" } ] ] }
+
+
+12. 좋아하는 책의 장르에 'IT'가 존재하는 팀원들의 이름과 좋아하는 책의 객체 정보를 출력한다.
+> db.avengers.find({"book.genre" : "IT"}, {_id : false , name : true, book : true})
+{ "name" : "진혜린", "book" : [ { "bookName" : "어마무시한 책 제목", "publisher" : "어마무시한 사람들", "genre" : "예술" }, { "bookName" : "처음 시작하는 스프링 프레임워크", "publisher" : "부크크", "genre" : "IT" } ] }
+
+
+
+
+
+
+
+
+
+
+
+
+

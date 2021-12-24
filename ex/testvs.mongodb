@@ -1,0 +1,54 @@
+// MongoDB Playground
+// Use Ctrl+Space inside a snippet or a string literal to trigger completions.
+use('test');
+
+db.avengers.count()
+
+db.datecoll.insert({_id : 1, name : '가나다' ,  dt : ISODate()})
+db.datecoll.insert({_id : 2, name : 'abc' , dt : ISODate("2020-01-01")})
+db.datecoll.insert({_id : 3, name : 'xyz' , dt : ISODate("2020-05-25 13:10")})
+db.datecoll.insert({_id : 5, name : 'xyz' , dt : ISODate("2020-05-25T13:11")})
+db.datecoll.insert({_id : 6, name : 'mmm' , dt : new Date()})
+db.datecoll.insert({_id : 7, name : 'kkk' , dt : ISODate("1998-11-07T00:00:00Z")})
+db.datecoll.find()
+
+db.datecoll.find().sort({dt:1})
+
+
+db.datecoll.find().sort({dt : 1})
+db.datecoll.find().sort({dt : -1})
+
+
+var v = db.datecoll.find()
+while(v.hasNext()){
+    var d = v.next();
+    print(d.dt.getYear() + 1900)
+}
+
+db.datecoll.find().map(
+ function(c) {
+ c = c.dt.getFullYear();
+ return c;
+ }
+)
+
+
+
+// The prototype form to create a collection:
+/* db.createCollection( <name>,
+  {
+    capped: <boolean>,
+    autoIndexId: <boolean>,
+    size: <number>,
+    max: <number>,
+    storageEngine: <document>,
+    validator: <document>,
+    validationLevel: <string>,
+    validationAction: <string>,
+    indexOptionDefaults: <document>,
+    viewOn: <string>,
+    pipeline: <pipeline>,
+    collation: <document>,
+    writeConcern: <document>
+  }
+)*/
