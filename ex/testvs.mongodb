@@ -1,39 +1,46 @@
 // MongoDB Playground
 // Use Ctrl+Space inside a snippet or a string literal to trigger completions.
-use('test');
+use('test')
 
-db.avengers.count()
-
-db.datecoll.insert({_id : 1, name : '가나다' ,  dt : ISODate()})
-db.datecoll.insert({_id : 2, name : 'abc' , dt : ISODate("2020-01-01")})
-db.datecoll.insert({_id : 3, name : 'xyz' , dt : ISODate("2020-05-25 13:10")})
-db.datecoll.insert({_id : 5, name : 'xyz' , dt : ISODate("2020-05-25T13:11")})
-db.datecoll.insert({_id : 6, name : 'mmm' , dt : new Date()})
-db.datecoll.insert({_id : 7, name : 'kkk' , dt : ISODate("1998-11-07T00:00:00Z")})
-db.datecoll.find()
-
-db.datecoll.find().sort({dt:1})
+db.restaurant.find().sort({"fprice" : -1})
 
 
-db.datecoll.find().sort({dt : 1})
-db.datecoll.find().sort({dt : -1})
-
-
-var v = db.datecoll.find()
-while(v.hasNext()){
-    var d = v.next();
-    print(d.dt.getYear() + 1900)
+db.restaurant.drop()
+for (let i=1; i < 15; i++) {
+    db.restaurant.insert({ _id : i, fname : 'food'+i, fprice : 1000 * i, 
+                fmaterial : ['A'+i, 'B'+i, 'C'+i], fcate : { type : 'T'+i, item : i} });
 }
 
-db.datecoll.find().map(
- function(c) {
- c = c.dt.getFullYear();
- return c;
- }
-)
+db.restaurant.find().pretty().limit(5)
 
 
+db.restaurant.find({} ,{"fname" : true, "fprice" : true})
 
+var a = db.restaurant.find({fprice: {$gt : 8000}}).count();
+print("가격이 8000원 초과인 음식들의 수는" + a + "입니다")
+
+db.restaurant.find({fprice: {$gt : 8000}}).count();
+
+db.restaurant.count()
+
+
+db.restaurant.find({
+
+  $or: [
+  {"fprice": {$gte : 3000}}, 
+  {"fprice":{$lte : 10000}}
+  ]
+} , {"_id" : true, "fname" : true, "fmaterial" : true})
+
+
+db.restaurant.find({"fmaterial.1" : "B4"}, {"fname" : true})
+
+db.restaurant.find({ fprice: {$gte : 10000}} , {"fcate" : true})
+
+db.restaurant.find({"fcate.item" : {$lte : 10}}, {"fname" : true, "fcate" : true})
+
+
+db.restaurant.update({"fname" : "food3"}, {$set : {"fname" : "food3", "fprice":13000 , "fmaterial.0" : "AA3" , "fcate.type" : "TT3"}}, {upsert : false} )
 // The prototype form to create a collection:
 /* db.createCollection( <name>,
   {

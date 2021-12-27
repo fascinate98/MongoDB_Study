@@ -23,3 +23,37 @@ WriteResult({ "nInserted" : 1 })
 { "_id" : ObjectId("61c2e201b3fb741bf9c04768"), "name" : "백성문", "age" : 27, "food" : [ "치킨", "소주" ], "color" : [ "검정" ], "book" : [ { "bookName" : "마션", "publisher" : "알에이치코리아", "genre" : "소설" } ] }
 { "_id" : ObjectId("61c2e207b3fb741bf9c04769"), "name" : "정의진", "age" : 28, "food" : [ "햄버거" ], "color" : [ "보라" ], "book" : [ { "bookName" : "어린왕자", "publisher" : "달리", "genre" : "판타지" } ] }
 { "_id" : ObjectId("61c2e20eb3fb741bf9c0476a"), "name" : "하진수", "age" : 29, "food" : [ "치킨" ], "color" : [ "블랙" ], "book" : [ { "bookName" : "위저드 베이커리", "publisher" : "창비", "genre" : "판타지" } ] }
+
+
+
+use('test');
+
+db.avengers.count()
+
+db.datecoll.insert({_id : 1, name : '가나다' ,  dt : ISODate()})
+db.datecoll.insert({_id : 2, name : 'abc' , dt : ISODate("2020-01-01")})
+db.datecoll.insert({_id : 3, name : 'xyz' , dt : ISODate("2020-05-25 13:10")})
+db.datecoll.insert({_id : 5, name : 'xyz' , dt : ISODate("2020-05-25T13:11")})
+db.datecoll.insert({_id : 6, name : 'mmm' , dt : new Date()})
+db.datecoll.insert({_id : 7, name : 'kkk' , dt : ISODate("1998-11-07T00:00:00Z")})
+db.datecoll.find()
+
+db.datecoll.find().sort({dt:1})
+
+
+db.datecoll.find().sort({dt : 1})
+db.datecoll.find().sort({dt : -1})
+
+
+var v = db.datecoll.find()
+while(v.hasNext()){
+    var d = v.next();
+    print(d.dt.getYear() + 1900)
+}
+
+db.datecoll.find().map(
+ function(c) {
+ c = c.dt.getFullYear();
+ return c;
+ }
+)
